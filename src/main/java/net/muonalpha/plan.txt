@@ -1,0 +1,16 @@
+Cavers
+    Basic concept
+        - Command line-based EDA tool in Minecraft
+        - Should allow circuit design and block placements
+
+    Usage ideas
+        Optimisers
+            - Floorplan optimisation (volume, x-y footprint)
+            - Speed optimisation (less repeaters)
+            - Noise optimisation (replace pistons with equivalent components)
+
+        LEC
+            - Check the logical equivalence of two specified modules
+
+        Signal visualiser
+            - Visualise the signal propagation diagram of a specified module
