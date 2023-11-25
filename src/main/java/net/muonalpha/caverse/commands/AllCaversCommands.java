@@ -8,7 +8,7 @@ import net.minecraftforge.server.command.ConfigCommand;
 import net.muonalpha.caverse.CaversMode;
 
 @Mod.EventBusSubscriber(modid = CaversMode.MODID)
-public class CaversCommands
+public class AllCaversCommands
 {
 	private static CommandDispatcher dispatcher;
 

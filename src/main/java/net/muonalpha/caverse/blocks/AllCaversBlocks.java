@@ -10,11 +10,11 @@ import net.minecraftforge.registries.DeferredRegister;
 import net.minecraftforge.registries.ForgeRegistries;
 import net.minecraftforge.registries.RegistryObject;
 import net.muonalpha.caverse.CaversMode;
-import net.muonalpha.caverse.items.CaversItems;
+import net.muonalpha.caverse.items.AllCaversItems;
 
 import java.util.function.Supplier;
 
-public class CaversBlocks
+public class AllCaversBlocks
 {
 	public static final DeferredRegister<Block> BLOCKS = DeferredRegister.create(ForgeRegistries.BLOCKS, CaversMode.MODID);
 
@@ -30,7 +30,7 @@ public class CaversBlocks
 
 	private static <T extends Block>RegistryObject<Item> registerBlockItem(String name, RegistryObject<T> block)
 	{
-		return CaversItems.ITEMS.register(name, () -> new BlockItem(block.get(), new Item.Properties()));
+		return AllCaversItems.ITEMS.register(name, () -> new BlockItem(block.get(), new Item.Properties()));
 	}
 
 	public static void register(IEventBus eventBus)

@@ -8,7 +8,7 @@ import net.minecraftforge.eventbus.api.IEventBus;
 import net.minecraftforge.registries.DeferredRegister;
 import net.minecraftforge.registries.RegistryObject;
 import net.muonalpha.caverse.CaversMode;
-import net.muonalpha.caverse.blocks.CaversBlocks;
+import net.muonalpha.caverse.blocks.AllCaversBlocks;
 
 public class CaversCreativeModeTab
 {
@@ -21,7 +21,7 @@ public class CaversCreativeModeTab
 			(
 				(param, event) ->
 				{
-					event.accept(CaversBlocks.COMMAND_CENTRE_BLOCK.get());
+					event.accept(AllCaversBlocks.COMMAND_CENTRE_BLOCK.get());
 				}
 			)
 			.build());

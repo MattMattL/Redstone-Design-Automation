@@ -7,7 +7,7 @@ import net.minecraft.world.level.block.entity.BlockEntity;
 import net.minecraft.world.level.block.entity.BlockEntityTicker;
 import net.minecraft.world.level.block.entity.BlockEntityType;
 import net.minecraft.world.level.block.state.BlockState;
-import net.muonalpha.caverse.blockentities.CaversBlockEntities;
+import net.muonalpha.caverse.blockentities.AllCaversBlockEntities;
 import net.muonalpha.caverse.blockentities.CommandCentreBlockEntity;
 import org.jetbrains.annotations.Nullable;
 
@@ -34,6 +34,6 @@ public class CommandCentreBlock extends BaseEntityBlock
 			return null;
 		}
 
-		return createTickerHelper(pBlockEntityType, CaversBlockEntities.COMMAND_CENTRE_BLOCK_ENTITY.get(), (level, blockPos, blockState, blockEntity) -> blockEntity.tick(level, blockPos, blockState));
+		return createTickerHelper(pBlockEntityType, AllCaversBlockEntities.COMMAND_CENTRE_BLOCK_ENTITY.get(), (level, blockPos, blockState, blockEntity) -> blockEntity.tick(level, blockPos, blockState));
 	}
 }

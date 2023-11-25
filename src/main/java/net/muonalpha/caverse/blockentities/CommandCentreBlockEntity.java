@@ -9,13 +9,14 @@ import net.minecraft.world.inventory.AbstractContainerMenu;
 import net.minecraft.world.level.Level;
 import net.minecraft.world.level.block.entity.BlockEntity;
 import net.minecraft.world.level.block.state.BlockState;
+import net.muonalpha.caverse.tools.timing.TimingTool;
 import org.jetbrains.annotations.Nullable;
 
 public class CommandCentreBlockEntity extends BlockEntity implements MenuProvider
 {
 	public CommandCentreBlockEntity(BlockPos pPos, BlockState pBlockState)
 	{
-		super(CaversBlockEntities.COMMAND_CENTRE_BLOCK_ENTITY.get(), pPos, pBlockState);
+		super(AllCaversBlockEntities.COMMAND_CENTRE_BLOCK_ENTITY.get(), pPos, pBlockState);
 	}
 
 	@Override
@@ -33,6 +34,9 @@ public class CommandCentreBlockEntity extends BlockEntity implements MenuProvide
 
 	public void tick(Level pLevel, BlockPos pPos, BlockState pState)
 	{
-		System.out.printf("tick\n");
+		if(TimingTool.isRunning)
+		{
+			TimingTool.tick();
+		}
 	}
 }
