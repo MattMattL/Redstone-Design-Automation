@@ -2,6 +2,7 @@
 	"item.cavers.command_centre_block_item": "Command Centre",
 	"block.cavers.command_centre_block": "Command Centre Block",
 	"block.cavers.command_centre_block_entity": "Command Centre Block Entity",
+	"menu.title.cavers.waveform_menu": "Waveformm",
 
 	"creativetab.cavers_tab": "Cavers EDA"
 }

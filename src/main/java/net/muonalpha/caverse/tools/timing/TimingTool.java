@@ -2,8 +2,11 @@ package net.muonalpha.caverse.tools.timing;
 
 import net.minecraft.commands.CommandSourceStack;
 import net.minecraft.core.BlockPos;
+import net.minecraft.network.chat.Component;
+import net.minecraft.world.SimpleMenuProvider;
 import net.minecraft.world.level.block.state.BlockState;
 import net.minecraft.world.level.block.state.properties.BlockStateProperties;
+import net.minecraftforge.network.NetworkHooks;
 
 import java.util.ArrayList;
 
@@ -49,9 +52,7 @@ public class TimingTool
 	{
 		isRunning = false;
 
-		System.out.println(inputProbes);
-		System.out.println(outputProbes);
-
+		// test ->
 		for(Probe probe : inputProbes)
 		{
 			System.out.printf("%10s ", probe.name);
@@ -75,6 +76,10 @@ public class TimingTool
 		}
 
 		System.out.printf("\n");
+		// <- test
+
+		NetworkHooks.openScreen(source.getPlayer(), new SimpleMenuProvider(
+				(pContainerId, pPlayerInventory, pPlayer) -> new WaveformMenu(pContainerId, pPlayer.getInventory()), Component.translatable("menu.title.cavers.waveform_menu")));
 
 		return 0;
 	}

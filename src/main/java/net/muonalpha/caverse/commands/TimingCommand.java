@@ -23,22 +23,25 @@ public class TimingCommand
 						.then(Commands.literal("input")
 							.then(Commands.argument("input_name", ComponentArgument.textComponent()).executes((source) ->
 							{
-								return registerProbeCallback(true, source.getSource(), Vec3Argument.getCoordinates(source, "signal_source"), ComponentArgument.getComponent(source, "input_name"));
+								return registerProbeCallback(true, source.getSource(), Vec3Argument.getCoordinates(source, "signal_source"), ComponentArgument.getComponent(source, "str_input_name"));
 							}))
 						)
 						.then(Commands.literal("output")
 							.then(Commands.argument("output_name", ComponentArgument.textComponent()).executes((source) ->
 							{
-								return registerProbeCallback(false, source.getSource(), Vec3Argument.getCoordinates(source, "signal_source"), ComponentArgument.getComponent(source, "output_name"));
+								return registerProbeCallback(false, source.getSource(), Vec3Argument.getCoordinates(source, "signal_source"), ComponentArgument.getComponent(source, "str_output_name"));
 							}))
 						)
 					)
 				);
 
-		// cavers timing run [auto|manual]
+		// cavers timing set <Vec3f> [input|output] <str_probe_name>
+		// cavers timing run <str_run_name> [auto|manual]
 		// cavers timing stop
-		// cavers timing set_io [input|output] <string_name>
-		// cavers timing clear_io
+		// cavers timing clear
+		// cavers timing history
+		// cavers timing restore <str_run_name>
+		// cavers timing help
 	}
 
 	private static int registerProbeCallback(boolean isInput, CommandSourceStack source, Coordinates coordinates, Component component)

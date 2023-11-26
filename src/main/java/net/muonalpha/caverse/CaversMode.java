@@ -1,6 +1,7 @@
 package net.muonalpha.caverse;
 
 import com.mojang.logging.LogUtils;
+import net.minecraft.client.gui.screens.MenuScreens;
 import net.minecraft.world.item.CreativeModeTabs;
 import net.minecraftforge.api.distmarker.Dist;
 import net.minecraftforge.common.MinecraftForge;
@@ -16,6 +17,8 @@ import net.muonalpha.caverse.blockentities.AllCaversBlockEntities;
 import net.muonalpha.caverse.blocks.AllCaversBlocks;
 import net.muonalpha.caverse.items.AllCaversItems;
 import net.muonalpha.caverse.items.CaversCreativeModeTab;
+import net.muonalpha.caverse.menus.AllCaversMenuTypes;
+import net.muonalpha.caverse.tools.timing.WaveformScreen;
 import org.slf4j.Logger;
 
 // The value here should match an entry in the META-INF/mods.toml file
@@ -35,6 +38,7 @@ public class CaversMode
         AllCaversItems.register(modEventBus);
         AllCaversBlocks.register(modEventBus);
         AllCaversBlockEntities.register(modEventBus);
+        AllCaversMenuTypes.register(modEventBus);
 
         MinecraftForge.EVENT_BUS.register(this);
 
@@ -77,6 +81,9 @@ public class CaversMode
         {
 //            LOGGER.info("HELLO FROM CLIENT SETUP");
 //            LOGGER.info("MINECRAFT NAME >> {}", Minecraft.getInstance().getUser().getName());
+            event.enqueueWork(
+                () -> { MenuScreens.register(AllCaversMenuTypes.WAVEFORM_MENU.get(), WaveformScreen::new); }
+            );
         }
     }
 }
