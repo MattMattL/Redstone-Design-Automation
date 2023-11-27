@@ -21,15 +21,15 @@ public class TimingCommand
 				.then(Commands.literal("set")
 					.then(Commands.argument("signal_source", Vec3Argument.vec3())
 						.then(Commands.literal("input")
-							.then(Commands.argument("input_name", ComponentArgument.textComponent()).executes((source) ->
+							.then(Commands.argument("str_input_name", ComponentArgument.textComponent()).executes((source) ->
 							{
-								return registerProbeCallback(true, source.getSource(), Vec3Argument.getCoordinates(source, "signal_source"), ComponentArgument.getComponent(source, "str_input_name"));
+								return setCommandCallback(true, source.getSource(), Vec3Argument.getCoordinates(source, "signal_source"), ComponentArgument.getComponent(source, "str_input_name"));
 							}))
 						)
 						.then(Commands.literal("output")
-							.then(Commands.argument("output_name", ComponentArgument.textComponent()).executes((source) ->
+							.then(Commands.argument("str_output_name", ComponentArgument.textComponent()).executes((source) ->
 							{
-								return registerProbeCallback(false, source.getSource(), Vec3Argument.getCoordinates(source, "signal_source"), ComponentArgument.getComponent(source, "str_output_name"));
+								return setCommandCallback(false, source.getSource(), Vec3Argument.getCoordinates(source, "signal_source"), ComponentArgument.getComponent(source, "str_output_name"));
 							}))
 						)
 					)
@@ -44,7 +44,7 @@ public class TimingCommand
 		// cavers timing help
 	}
 
-	private static int registerProbeCallback(boolean isInput, CommandSourceStack source, Coordinates coordinates, Component component)
+	private static int setCommandCallback(boolean isInput, CommandSourceStack source, Coordinates coordinates, Component component)
 	{
 		BlockPos blockPos = coordinates.getBlockPos(source);
 

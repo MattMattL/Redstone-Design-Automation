@@ -12,8 +12,8 @@ import java.util.ArrayList;
 
 public class TimingTool
 {
-	private static final ArrayList<Probe> inputProbes = new ArrayList<>();
-	private static final ArrayList<Probe> outputProbes = new ArrayList<>();
+	public static final ArrayList<Probe> inputProbes = new ArrayList<>();
+	public static final ArrayList<Probe> outputProbes = new ArrayList<>();
 
 	public static boolean isRunning = false;
 
@@ -53,7 +53,7 @@ public class TimingTool
 		isRunning = false;
 
 		// test ->
-		for(Probe probe : inputProbes)
+		/*for(Probe probe : inputProbes)
 		{
 			System.out.printf("%10s ", probe.name);
 
@@ -75,7 +75,7 @@ public class TimingTool
 			System.out.printf("\n");
 		}
 
-		System.out.printf("\n");
+		System.out.printf("\n");*/
 		// <- test
 
 		NetworkHooks.openScreen(source.getPlayer(), new SimpleMenuProvider(

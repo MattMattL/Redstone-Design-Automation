@@ -19,8 +19,6 @@ public class AllCaversCommands
 
 		dispatcher.register(
 			net.minecraft.commands.Commands.literal("cavers").requires((player) -> { return player.hasPermission(2); })
-				.then(TestCommand.wrapper())
-				.then(TestCommand.wrapper2())
 				.then(TimingCommand.wrapper())
 		);
 

@@ -11,21 +11,17 @@ public class WaveformMenu extends AbstractContainerMenu
 	public WaveformMenu(int pContainerId, Inventory inventory)
 	{
 		super(AllCaversMenuTypes.WAVEFORM_MENU.get(), pContainerId);
-
-		System.out.printf("WaveformMenu#WaveFormMenu\n");
 	}
 
 	@Override
 	public ItemStack quickMoveStack(Player pPlayer, int pIndex)
 	{
-		System.out.printf("WaveformMenu#quickMoveStack\n");
 		return new ItemStack(ItemStack.EMPTY.getItem());
 	}
 
 	@Override
 	public boolean stillValid(Player pPlayer)
 	{
-		System.out.printf("WaveformMenu#stillValid\n");
 		return true;
 	}
 }
