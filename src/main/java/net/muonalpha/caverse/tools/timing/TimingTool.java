@@ -17,7 +17,7 @@ public class TimingTool
 
 	public static boolean isRunning = false;
 
-	public static int registerProbe(boolean isInput, CommandSourceStack source, BlockPos blockPos, String uniqueName)
+	public static int onAddCommand(boolean isInput, CommandSourceStack source, BlockPos blockPos, String uniqueName)
 	{
 		BlockState blockState = source.getLevel().getBlockState(blockPos);
 
@@ -41,6 +41,35 @@ public class TimingTool
 		return 0;
 	}
 
+	private static ArrayList<Boolean> getRandomSignalsForDebugging()
+	{
+		ArrayList<Boolean> randomSignals = new ArrayList<>();
+
+		for(int signal=0; signal<100; signal++)
+		{
+			randomSignals.add(Math.random() < 0.5);
+		}
+
+		return randomSignals;
+	}
+
+	public static int onDebugCommand()
+	{
+		for(int i=0; i<5; i++)
+		{
+			inputProbes.add(new Probe(null, null, "input"));
+			inputProbes.get(inputProbes.size() - 1).loggedSignals = getRandomSignalsForDebugging();
+		}
+
+		for(int o=0; o<5; o++)
+		{
+			outputProbes.add(new Probe(null, null, "output"));
+			outputProbes.get(outputProbes.size() - 1).loggedSignals = getRandomSignalsForDebugging();
+		}
+
+		return 0;
+	}
+
 	public static int onRunCommand(CommandSourceStack source)
 	{
 		isRunning = true;
@@ -51,32 +80,6 @@ public class TimingTool
 	public static int onStopCommand(CommandSourceStack source)
 	{
 		isRunning = false;
-
-		// test ->
-		/*for(Probe probe : inputProbes)
-		{
-			System.out.printf("%10s ", probe.name);
-
-			for(boolean signal : probe.loggedSignals)
-				System.out.printf("%d ", signal? 1 : 0);
-
-			System.out.printf("\n");
-		}
-
-		System.out.printf("\n");
-
-		for(Probe probe : outputProbes)
-		{
-			System.out.printf("%10s ", probe.name);
-
-			for(boolean signal : probe.loggedSignals)
-				System.out.printf("%d ", signal? 1 : 0);
-
-			System.out.printf("\n");
-		}
-
-		System.out.printf("\n");*/
-		// <- test
 
 		NetworkHooks.openScreen(source.getPlayer(), new SimpleMenuProvider(
 				(pContainerId, pPlayerInventory, pPlayer) -> new WaveformMenu(pContainerId, pPlayer.getInventory()), Component.translatable("menu.title.cavers.waveform_menu")));

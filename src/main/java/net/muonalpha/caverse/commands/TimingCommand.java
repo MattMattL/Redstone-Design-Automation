@@ -6,7 +6,6 @@ import net.minecraft.commands.Commands;
 import net.minecraft.commands.arguments.ComponentArgument;
 import net.minecraft.commands.arguments.coordinates.Coordinates;
 import net.minecraft.commands.arguments.coordinates.Vec3Argument;
-import net.minecraft.core.BlockPos;
 import net.minecraft.network.chat.Component;
 import net.muonalpha.caverse.tools.timing.TimingTool;
 
@@ -14,28 +13,8 @@ public class TimingCommand
 {
 	public static LiteralArgumentBuilder<CommandSourceStack> wrapper()
 	{
-//		return Commands.literal("timing").requires((source) -> { return source.hasPermission(2); })
-//				.then(Commands.literal("clear").executes((source) -> { return clearCommandCallback(source.getSource()); }))
-//				.then(Commands.literal("run").executes((source) -> { return runCommandCallback(source.getSource()); }))
-//				.then(Commands.literal("stop").executes((source) -> { return stopCommandCallback(source.getSource()); }))
-//				.then(Commands.literal("set")
-//					.then(Commands.argument("signal_source", Vec3Argument.vec3())
-//						.then(Commands.literal("input")
-//							.then(Commands.argument("str_input_name", ComponentArgument.textComponent()).executes((source) ->
-//							{
-//								return probeCommandCallback(true, source.getSource(), Vec3Argument.getCoordinates(source, "signal_source"), ComponentArgument.getComponent(source, "str_input_name"));
-//							}))
-//						)
-//						.then(Commands.literal("output")
-//							.then(Commands.argument("str_output_name", ComponentArgument.textComponent()).executes((source) ->
-//							{
-//								return probeCommandCallback(false, source.getSource(), Vec3Argument.getCoordinates(source, "signal_source"), ComponentArgument.getComponent(source, "str_output_name"));
-//							}))
-//						)
-//					)
-//				);
-
 		return Commands.literal("timing").requires((source) -> { return source.hasPermission(2); })
+//				.then(Commands.literal("debug").executes((source) -> { return debugCommandCallback(); }))
 				.then(Commands.literal("clear").executes((source) -> { return clearCommandCallback(source.getSource()); }))
 				.then(Commands.literal("run").executes((source) -> { return runCommandCallback(source.getSource()); }))
 				.then(Commands.literal("stop").executes((source) -> { return stopCommandCallback(source.getSource()); }))
@@ -44,7 +23,7 @@ public class TimingCommand
 						.then(Commands.argument("signal_source", Vec3Argument.vec3())
 							.then(Commands.argument("str_input_name", ComponentArgument.textComponent()).executes((source) ->
 							{
-								return probeCommandCallback(true, source.getSource(), Vec3Argument.getCoordinates(source, "signal_source"), ComponentArgument.getComponent(source, "str_input_name"));
+								return addCommandCallback(true, source.getSource(), Vec3Argument.getCoordinates(source, "signal_source"), ComponentArgument.getComponent(source, "str_input_name"));
 							}))
 						)
 					)
@@ -52,24 +31,29 @@ public class TimingCommand
 						.then(Commands.argument("signal_source", Vec3Argument.vec3())
 							.then(Commands.argument("str_output_name", ComponentArgument.textComponent()).executes((source) ->
 							{
-								return probeCommandCallback(false, source.getSource(), Vec3Argument.getCoordinates(source, "signal_source"), ComponentArgument.getComponent(source, "str_output_name"));
+								return addCommandCallback(false, source.getSource(), Vec3Argument.getCoordinates(source, "signal_source"), ComponentArgument.getComponent(source, "str_output_name"));
 							}))
 						)
 					)
 				);
 
-		// cavers timing add <Vec3f> [input|output] <str_probe_name>
+		// cavers timing add [input|output] <Vec3> <str_probe_name>
+		// cavers timing clear
 		// cavers timing run <str_run_name> [auto|manual]
 		// cavers timing stop
-		// cavers timing clear
 		// cavers timing history
 		// cavers timing restore <str_run_name>
 		// cavers timing help
 	}
 
-	private static int probeCommandCallback(boolean isInput, CommandSourceStack source, Coordinates coordinates, Component component)
+	private static int debugCommandCallback()
 	{
-		return TimingTool.registerProbe(isInput, source, coordinates.getBlockPos(source), component.getString());
+		return TimingTool.onDebugCommand();
+	}
+
+	private static int addCommandCallback(boolean isInput, CommandSourceStack source, Coordinates coordinates, Component component)
+	{
+		return TimingTool.onAddCommand(isInput, source, coordinates.getBlockPos(source), component.getString());
 	}
 
 	private static int runCommandCallback(CommandSourceStack source)

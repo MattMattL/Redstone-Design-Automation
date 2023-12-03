@@ -1,6 +1,7 @@
 package net.muonalpha.caverse.commands;
 
 import com.mojang.brigadier.CommandDispatcher;
+import net.minecraft.commands.Commands;
 import net.minecraftforge.event.RegisterCommandsEvent;
 import net.minecraftforge.eventbus.api.SubscribeEvent;
 import net.minecraftforge.fml.common.Mod;
@@ -18,7 +19,7 @@ public class AllCaversCommands
 		dispatcher = event.getDispatcher();
 
 		dispatcher.register(
-			net.minecraft.commands.Commands.literal("cavers").requires((player) -> { return player.hasPermission(2); })
+				Commands.literal("cavers").requires((player) -> { return player.hasPermission(2); })
 				.then(TimingCommand.wrapper())
 		);
 
