@@ -1,0 +1,6 @@
+{
+	"parent": "item/generated",
+	"textures": {
+		"layer0": "cavers:item/command_centre_block_item"
+	}
+}

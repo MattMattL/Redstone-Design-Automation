@@ -25,6 +25,7 @@ run
 forge*changelog.txt
 
 #
+**/.DS_Store
 /*
 !src
 !.gitignore
