@@ -30,11 +30,11 @@ public class WaveformScreen extends AbstractContainerScreen<WaveformMenu>
 
 	private final float DRAG_Y_MULTIPLIER = 1;
 	private final float SCROLL_MULTIPLIER = 2;
-	private int HOR_SCROLL_LIMIT = 0;
+	private int BLANK_SCROLL_AREA_LIMIT = 0;
 
-	private float scrollAmountX = 0;
-	private float dragAmountX = 0;
-	private float dragAmountY = 0;
+	private double scrollAmountX = 0;
+	private double dragAmountX = 0;
+	private double dragAmountY = 0;
 
 	public WaveformScreen(WaveformMenu pMenu, Inventory pPlayerInventory, Component pTitle)
 	{
@@ -61,9 +61,9 @@ public class WaveformScreen extends AbstractContainerScreen<WaveformMenu>
 		this.HIGH_WAVE_HEIGHT = 10;
 		this.LOW_WAVE_HEIGHT = 2;
 		this.WAVE_BOTTOM_MARGIN = 5;
-		this.WIDTH_PER_SIGNAL = 4;
+		this.WIDTH_PER_SIGNAL = 5;
 
-		this.HOR_SCROLL_LIMIT = CHANNEL_WIDTH / 2;
+		this.BLANK_SCROLL_AREA_LIMIT = CHANNEL_WIDTH / 2;
 
 		this.titleLabelX = 10000; // TODO: change to rendering blank strings " "
 		this.inventoryLabelY = 10000;
@@ -85,6 +85,11 @@ public class WaveformScreen extends AbstractContainerScreen<WaveformMenu>
 	protected void renderBg(GuiGraphics pGuiGraphics, float pPartialTick, int pMouseX, int pMouseY)
 	{
 		pGuiGraphics.blit(WAVEFORM_TEXTURE, this.leftPos, this.topPos, 0, 0, this.imageWidth, this.imageHeight);
+
+		if(this.allProbes.isEmpty())
+		{
+			return;
+		}
 
 		int columnNumber = 0;
 		int firstChannelNumber = (int)(this.dragAmountY / CHANNEL_HEIGHT);
@@ -109,22 +114,25 @@ public class WaveformScreen extends AbstractContainerScreen<WaveformMenu>
 		}
 
 		// draw vertical bar
-		int baseX = mouseX - CHANNELS_LEFT;
+		int scrollCorrection = (int)(this.scrollAmountX % WIDTH_PER_SIGNAL);
+
+		int baseX = mouseX - CHANNELS_LEFT - scrollCorrection;
 		baseX -= baseX % WIDTH_PER_SIGNAL;
-		baseX += ((int)this.scrollAmountX) % WIDTH_PER_SIGNAL;
-		baseX += CHANNELS_LEFT;
+		baseX += CHANNELS_LEFT + scrollCorrection;
 
 		int baseY = CHANNELS_TOP + CHANNEL_HEIGHT * column;
 
 		gui.blit(WAVEFORM_TEXTURE, baseX, baseY, 245, 0, WIDTH_PER_SIGNAL, CHANNEL_HEIGHT-2);
 
-//		// display redstone tick number
-//		int redstoneTick = mouseX - CHANNELS_LEFT - ((int)this.scrollAmountX);
-//		redstoneTick /= WIDTH_PER_SIGNAL;
-//
-//		String infoToDisplay = String.format("%d", redstoneTick);
-//
-//		gui.drawString(this.font, infoToDisplay, baseX - this.font.width(infoToDisplay)/2, this.topPos - 20, 0xf0f0f0);
+		// display redstone tick count
+		int redstoneTick = mouseX - CHANNELS_LEFT - (int)(this.scrollAmountX);
+		redstoneTick /= WIDTH_PER_SIGNAL;
+
+		if(redstoneTick > 0)
+		{
+			String infoToDisplay = String.format("%d", redstoneTick);
+			gui.drawString(this.font, infoToDisplay, baseX + WIDTH_PER_SIGNAL/2 - this.font.width(infoToDisplay)/2, this.topPos - 16, 0xf0f0f0);
+		}
 	}
 
 	private void renderChannelSignals(GuiGraphics gui, ArrayList<Boolean> signals, int column)
@@ -161,7 +169,7 @@ public class WaveformScreen extends AbstractContainerScreen<WaveformMenu>
 	private void renderChannelName(GuiGraphics gui, String name, int column)
 	{
 		int baseX = CHANNELS_LEFT + 1;
-		int baseY = CHANNELS_TOP + CHANNEL_HEIGHT * column + 1;
+		int baseY = CHANNELS_TOP + (CHANNEL_HEIGHT * column) + 1;
 
 		gui.drawString(this.font, name, baseX, baseY, 0xf0f0f0);
 	}
@@ -190,13 +198,13 @@ public class WaveformScreen extends AbstractContainerScreen<WaveformMenu>
 		{
 			this.scrollAmountX += pDelta * SCROLL_MULTIPLIER;
 
-			if(this.scrollAmountX > HOR_SCROLL_LIMIT)
+			if(this.scrollAmountX > BLANK_SCROLL_AREA_LIMIT)
 			{
-				this.scrollAmountX = HOR_SCROLL_LIMIT;
+				this.scrollAmountX = BLANK_SCROLL_AREA_LIMIT;
 			}
-			else if(this.scrollAmountX < HOR_SCROLL_LIMIT - this.allProbes.get(0).loggedSignals.size() * WIDTH_PER_SIGNAL)
+			else if(this.scrollAmountX < BLANK_SCROLL_AREA_LIMIT- this.allProbes.get(0).loggedSignals.size() * WIDTH_PER_SIGNAL)
 			{
-				this.scrollAmountX = HOR_SCROLL_LIMIT - this.allProbes.get(0).loggedSignals.size() * WIDTH_PER_SIGNAL;
+				this.scrollAmountX = BLANK_SCROLL_AREA_LIMIT- this.allProbes.get(0).loggedSignals.size() * WIDTH_PER_SIGNAL;
 			}
 		}
 
