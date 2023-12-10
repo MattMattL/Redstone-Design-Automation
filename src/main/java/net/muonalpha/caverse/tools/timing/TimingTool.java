@@ -14,8 +14,10 @@ public class TimingTool
 {
 	public static final ArrayList<Probe> inputProbes = new ArrayList<>();
 	public static final ArrayList<Probe> outputProbes = new ArrayList<>();
+	public static final ArrayList<Probe> allProbes = new ArrayList<>();
 
 	public static boolean isRunning = false;
+	private static boolean isEvenTick = true;
 
 	public static int onAddCommand(boolean isInput, CommandSourceStack source, BlockPos blockPos, String uniqueName)
 	{
@@ -89,8 +91,6 @@ public class TimingTool
 
 	public static void tick()
 	{
-		System.out.printf("tick\n");
-
 		for(Probe probe : inputProbes)
 		{
 			probe.saveCurrentSignal();
@@ -116,6 +116,7 @@ public class TimingTool
 	{
 		inputProbes.clear();
 		outputProbes.clear();
+		allProbes.clear();
 
 		return 0;
 	}

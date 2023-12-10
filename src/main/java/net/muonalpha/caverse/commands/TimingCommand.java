@@ -14,10 +14,10 @@ public class TimingCommand
 	public static LiteralArgumentBuilder<CommandSourceStack> wrapper()
 	{
 		return Commands.literal("timing").requires((source) -> { return source.hasPermission(2); })
-//				.then(Commands.literal("debug").executes((source) -> { return debugCommandCallback(); }))
+				.then(Commands.literal("debug").executes((source) -> { return debugCommandCallback(); }))
 				.then(Commands.literal("clear").executes((source) -> { return clearCommandCallback(source.getSource()); }))
 				.then(Commands.literal("run").executes((source) -> { return runCommandCallback(source.getSource()); }))
-				.then(Commands.literal("stop").executes((source) -> { return stopCommandCallback(source.getSource()); }))
+				.then(Commands.literal("end").executes((source) -> { return stopCommandCallback(source.getSource()); }))
 				.then(Commands.literal("add")
 					.then(Commands.literal("input")
 						.then(Commands.argument("signal_source", Vec3Argument.vec3())
@@ -40,7 +40,7 @@ public class TimingCommand
 		// cavers timing add [input|output] <Vec3> <str_probe_name>
 		// cavers timing clear
 		// cavers timing run <str_run_name> [auto|manual]
-		// cavers timing stop
+		// cavers timing end
 		// cavers timing history
 		// cavers timing restore <str_run_name>
 		// cavers timing help

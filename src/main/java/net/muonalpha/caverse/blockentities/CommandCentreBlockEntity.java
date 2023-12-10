@@ -16,6 +16,8 @@ import org.jetbrains.annotations.Nullable;
 
 public class CommandCentreBlockEntity extends BlockEntity
 {
+	private int gameTick = 0;
+
 	public CommandCentreBlockEntity(BlockPos pPos, BlockState pBlockState)
 	{
 		super(AllCaversBlockEntities.COMMAND_CENTRE_BLOCK_ENTITY.get(), pPos, pBlockState);
@@ -25,7 +27,17 @@ public class CommandCentreBlockEntity extends BlockEntity
 	{
 		if(TimingTool.isRunning)
 		{
-			TimingTool.tick();
+			if(this.gameTick % 2 == 0) // run every redstone tick
+			{
+				TimingTool.tick();
+
+				if(this.gameTick > 12000) // reset every 10 minutes
+				{
+					this.gameTick = 0;
+				}
+			}
+
+			this.gameTick++;
 		}
 	}
 }
