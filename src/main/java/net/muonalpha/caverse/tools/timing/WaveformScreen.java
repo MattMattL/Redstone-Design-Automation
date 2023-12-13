@@ -69,8 +69,8 @@ public class WaveformScreen extends AbstractContainerScreen<WaveformMenu>
 		this.inventoryLabelY = 10000;
 
 		this.allProbes.clear();
-		this.allProbes.addAll(TimingTool.inputProbes);
-		this.allProbes.addAll(TimingTool.outputProbes);
+		this.allProbes.addAll(TimingTool.waveformResult.inputProbes);
+		this.allProbes.addAll(TimingTool.waveformResult.outputProbes);
 	}
 
 	@Override
